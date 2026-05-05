@@ -1,10 +1,10 @@
 <?php
-// Xác định trang hiện tại
+// 現在のページ名を取得する
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,18 +15,21 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-header">
         <div class="container-fluid">
-            <!-- Logo -->
+            <!-- ロゴ -->
             <a class="navbar-brand" href="home.php">
                 <img src="../../asset/img/vnw_empower_growth_logo_white.png" alt="Jobhive Logo" height="30">
             </a>
-            <!-- Responsive toggle button -->
+            
+            <!-- レスポンシブ用トグラーボタン -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- ナビゲーションメニュー（中央配置） -->
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item px-4">
-                        <a class="nav-link <?php echo $current_page === 'home.php' ? 'active' : ''; ?>" href="home.php">User Managenent</a>
+                        <a class="nav-link <?php echo $current_page === 'home.php' ? 'active' : ''; ?>" href="home.php">User Management</a>
                     </li>
                     <li class="nav-item px-4">
                         <a class="nav-link <?php echo $current_page === 'Joblist.php' ? 'active' : ''; ?>" href="Joblist.php">Job Management</a>
@@ -38,10 +41,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <a class="nav-link <?php echo $current_page === 'contact_us.php' ? 'active' : ''; ?>" href="contact_us.php">Contact Us</a>
                     </li>
                 </ul>
+
+                <!-- 右側のメニュー（ログアウト） -->
                 <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-outline-light" href="../../auth/logout.php">Log out</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light" href="../../auth/logout.php">Log out</a>
+                    </li>
                 </ul>
             </div>
         </div>
