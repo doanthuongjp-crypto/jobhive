@@ -3,19 +3,21 @@ require_once '../DB/dbInfo.php';
 require_once '../db/Job_management.php';
 require_once '../db/Company_management.php';
 
-// Lấy danh sách job và company
+// 求人一覧および企業一覧を取得
 $jobs = JobManagement::getJobs();
-$companies = CompanyManagement::getCompanies(); // Bạn cần tạo hàm getCompanies để lấy danh sách công ty
+$companies = CompanyManagement::getCompanies(); // 企業リスト取得用の関数が必要です
 
-// Xử lý Form
+// フォーム処理（リクエストハンドリング）
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
+            // 求人情報の追加
             case 'add':
                 $result = JobManagement::addJob($_POST);
                 $message = $result['message'];
                 break;
 
+            // 求人情報の削除
             case 'delete':
                 $result = JobManagement::deleteJob($_POST['job_id']);
                 $message = $result['message'];
@@ -23,19 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Redirect kèm message
+    // メッセージを付与してリダイレクト（二重送信防止）
     header("Location: " . $_SERVER['PHP_SELF'] . "?message=" . urlencode($message));
     exit();
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Management</title>
+    <title>求人管理システム</title>
     <style>
+        /* スタイル設定 */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f5f5;
@@ -125,6 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <!-- アラートメッセージの表示 -->
     <?php if (isset($_GET['message'])): ?>
         <script>
             alert("<?= htmlspecialchars($_GET['message']) ?>");
@@ -132,20 +136,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <div class="container">
-        <h1>Job Management</h1>
+        <h1>求人管理</h1>
 
+        <!-- 求人一覧テーブル -->
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Title</th>
-                    <th>Company</th>
-                    <th>Location</th>
-                    <th>Category</th>
-                    <th>Type</th>
-                    <th>Experience</th>
-                    <th>Remote</th>
-                    <th>Actions</th>
+                    <th>職種名</th>
+                    <th>企業名</th>
+                    <th>勤務地</th>
+                    <th>カテゴリー</th>
+                    <th>雇用形態</th>
+                    <th>経験レベル</th>
+                    <th>リモート可否</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -160,11 +165,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <td><?= htmlspecialchars($job['experience_level']) ?></td>
                         <td><?= htmlspecialchars($job['remote_option']) ?></td>
                         <td>
+                            <!-- 削除用フォーム -->
                             <form method="POST" style="display: inline;">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="job_id" value="<?= $job['job_id'] ?>">
                                 <button type="submit" class="action-btn delete-btn"
-                                    onclick="return confirm('Are you sure you want to delete this job?')">Delete</button>
+                                    onclick="return confirm('この求人を削除してもよろしいですか？')">削除</button>
                             </form>
                         </td>
                     </tr>
@@ -172,18 +178,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tbody>
         </table>
 
+        <!-- 求人追加フォームセクション -->
         <div class="form-section">
-            <h2>Add New Job</h2>
+            <h2>新規求人登録</h2>
             <form method="POST">
                 <input type="hidden" name="action" value="add">
 
                 <div class="form-group">
-                    <label for="title">Job Title</label>
+                    <label for="title">職種名</label>
                     <input type="text" name="title" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="company_id">Company</label>
+                    <label for="company_id">企業名</label>
                     <select name="company_id" required>
                         <?php foreach ($companies as $company): ?>
                             <option value="<?= $company['company_id'] ?>"><?= htmlspecialchars($company['company_name']) ?></option>
@@ -192,75 +199,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">仕事内容</label>
                     <textarea name="description" required></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="location">Location</label>
+                    <label for="location">勤務地</label>
                     <input type="text" name="location" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="category">Category</label>
+                    <label for="category">カテゴリー</label>
                     <select name="category" required>
-                        <option value="IT_Software">IT Software</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Finance">Finance</option>
-                        <option value="Healthcare">Healthcare</option>
-                        <option value="Government_Public_Sector">Government & Public Sector</option>
+                        <option value="IT_Software">IT/ソフトウェア</option>
+                        <option value="Marketing">マーケティング</option>
+                        <option value="Finance">金融</option>
+                        <option value="Healthcare">医療/ヘルスケア</option>
+                        <option value="Government_Public_Sector">官公庁/公共セクター</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="job_type">Job Type</label>
+                    <label for="job_type">雇用形態</label>
                     <select name="job_type" required>
-                        <option value="Full-time">Full-time</option>
-                        <option value="Part-time">Part-time</option>
-                        <option value="Internship">Internship</option>
-                        <option value="Contract">Contract</option>
+                        <option value="Full-time">正社員</option>
+                        <option value="Part-time">アルバイト/パート</option>
+                        <option value="Internship">インターンシップ</option>
+                        <option value="Contract">契約社員</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="experience_level">Experience Level</label>
+                    <label for="experience_level">経験レベル</label>
                     <select name="experience_level" required>
-                        <option value="Entry">Entry</option>
-                        <option value="Mid">Mid</option>
-                        <option value="Senior">Senior</option>
+                        <option value="Entry">初級 (Entry)</option>
+                        <option value="Mid">中級 (Mid)</option>
+                        <option value="Senior">上級 (Senior)</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="remote_option">Remote Option</label>
+                    <label for="remote_option">リモートワーク</label>
                     <select name="remote_option" required>
-                        <option value="Remote">Remote</option>
-                        <option value="Onsite">Onsite</option>
-                        <option value="Hybrid">Hybrid</option>
+                        <option value="Remote">フルリモート</option>
+                        <option value="Onsite">出社</option>
+                        <option value="Hybrid">ハイブリッド</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="salary">Salary</label>
+                    <label for="salary">給与</label>
                     <input type="text" name="salary">
                 </div>
 
                 <div class="form-group">
-                    <label for="qualifications">Qualifications</label>
+                    <label for="qualifications">応募資格</label>
                     <textarea name="qualifications"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="perks">Perks</label>
+                    <label for="perks">福利厚生</label>
                     <textarea name="perks"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="application_deadline">Application Deadline</label>
+                    <label for="application_deadline">応募締切日</label>
                     <input type="date" name="application_deadline">
                 </div>
 
-                <button type="submit" class="submit-btn">Add Job</button>
+                <button type="submit" class="submit-btn">求人を追加</button>
             </form>
         </div>
     </div>
