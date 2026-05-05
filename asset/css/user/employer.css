@@ -1,0 +1,140 @@
+.bg-color-blue {
+  background: linear-gradient(180deg, #002f86, #00349a, #0156f0);
+  min-height: 100vh;
+  color: white;
+}
+
+
+.custom-blue {
+  background: linear-gradient(180deg, #002f86, #00349a, #0156f0);
+}
+
+.bg-header {
+  background: #003699;
+}
+
+.logo-header{
+  width: 10rem;
+}
+
+.navbar-brand img{
+  width:10rem;
+  height: auto;
+}
+
+.navbar .nav-link {
+  color: white !important;
+  font-weight: bold;
+
+}
+
+.nav-link:hover {
+  background-color: white;
+  color: #003699 !important;
+  width: 100%;
+  display: block;
+  padding: 10px 15px;
+}
+
+.hero-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 15px; /* Thêm padding để tránh sát mép trên mobile */
+
+}
+
+#hero-carousel {
+    width: 100%;
+    max-width: 1200px; /* Chiều rộng tối đa cho màn hình lớn */
+}
+
+.hero-img {
+    width: 100%;
+    height: auto; /* Đảm bảo hình ảnh giữ tỷ lệ */
+    max-height: 600px; /* Chiều cao tối đa cho màn hình lớn */
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+      border: none;
+    border-radius: 12px;
+}
+
+/* Responsive cho các kích thước màn hình nhỏ hơn */
+@media (max-width: 768px) {
+    #hero-carousel {
+        max-width: 100%; /* Chiếm toàn bộ chiều rộng trên mobile */
+    }
+
+    .hero-img {
+        max-height: 400px; /* Giảm chiều cao trên màn hình nhỏ */
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-img {
+        max-height: 300px; /* Giảm thêm chiều cao cho màn hình rất nhỏ */
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 15%; /* Tăng diện tích nút điều khiển trên mobile */
+    }
+}
+
+.bg-job-list{
+  background-color: #e5eeff;
+}
+
+.job-card:hover, .category-card:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+        
+.card-text{
+  margin: 0; 
+}
+
+/* List feedback */
+.feedback-card{
+  width: 25rem;
+  height: 13rem !important;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-indicators {
+  bottom: -3rem !important; /* Indicator cách dưới carousel */
+}
+
+
+.filled {
+  color: #ffc107; /* Gold color for filled stars */
+}
+
+.feedback-container {
+  min-height: 15rem;
+}
+
+/* Feedback */
+.star-rating {
+  direction: rtl; /* Để hover từ phải sang trái */
+  display: inline-flex;
+}
+.star-rating input {
+  display: none;
+}
+.star-rating label {
+  color: #ccc;
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 0 5px;
+}
+.star-rating input:checked ~ label {
+  color: #f5c518;
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #f5c518;
+}
