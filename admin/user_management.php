@@ -2,20 +2,19 @@
 require_once '../DB/dbInfo.php';
 require_once '../db/User_management.php';
 
+// セッション管理および権限チェック（必要に応じて有効化）
 // session_start();
 // if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 //     header('Location: ../../auth/login.php');
 //     exit;
 // }
 
-
-// Handle Form Submissions
-
+// フォーム送信の処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
             case 'add':
-                // Add new user
+                // 新規ユーザーの追加
                 $result = UserManagement::addUser(
                     $_POST['username'],
                     $_POST['email'],
@@ -26,30 +25,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
 
             case 'delete':
-                // Delete user
+                // ユーザーの削除
                 $result = UserManagement::deleteUser($_POST['id']);
                 $message = $result['message'];
                 break;
         }
     }
 
-    // Redirect kèm message
+    // メッセージを付与してリダイレクト（二重送信防止）
     header("Location: " . $_SERVER['PHP_SELF'] . "?message=" . urlencode($message));
     exit();
 }
 
-// Get all users
+// 全ユーザー情報の取得
 $users = UserManagement::getUsers();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Account Management</title>
+    <title>ユーザーアカウント管理</title>
     <style>
+        /* 基本スタイル設定 */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -156,25 +156,28 @@ $users = UserManagement::getUsers();
 </head>
 
 <body>
-    <!-- Alert messange -->
+    <!-- アラートメッセージ表示 -->
     <?php if (isset($_GET['message'])): ?>
         <script>
             alert("<?= htmlspecialchars($_GET['message']) ?>");
         </script>
     <?php endif; ?>
-    <?php include './include/header.php' ?>
-    <div class="container">
-        <h1>User Account Management</h1>
 
+    <?php include './include/header.php' ?>
+
+    <div class="container">
+        <h1>ユーザーアカウント管理</h1>
+
+        <!-- ユーザー一覧テーブル -->
         <table class="user-table">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
+                    <th>ユーザー名</th>
+                    <th>メールアドレス</th>
+                    <th>権限</th>
+                    <th>作成日時</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -190,8 +193,8 @@ $users = UserManagement::getUsers();
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="id" value="<?= $user['user_id'] ?>">
                                 <button type="submit" class="action-btn delete-btn"
-                                    onclick="return confirm('Are you sure you want to delete this user?')">
-                                    Delete
+                                    onclick="return confirm('このユーザーを削除してもよろしいですか？')">
+                                    削除
                                 </button>
                             </form>
                         </td>
@@ -200,30 +203,31 @@ $users = UserManagement::getUsers();
             </tbody>
         </table>
 
+        <!-- 新規ユーザー登録フォーム -->
         <div class="add-user-form">
-            <h2>Add New User</h2>
+            <h2>新規ユーザー登録</h2>
             <form method="POST">
                 <input type="hidden" name="action" value="add">
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="username">ユーザー名</label>
                     <input type="text" id="username" name="username" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email">メールアドレス</label>
                     <input type="email" id="email" name="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">パスワード</label>
                     <input type="password" id="password" name="password" required>
                 </div>
                 <div class="form-group">
-                    <label for="role">Role</label>
-                    <select name="role" id="">
-                       <option value="job_seeker">Job Seeker</option>
-                        <option value="admin">Admin</option>
+                    <label for="role">権限ロール</label>
+                    <select name="role" id="role">
+                       <option value="job_seeker">求職者 (Job Seeker)</option>
+                       <option value="admin">管理者 (Admin)</option>
                     </select>
                 </div>
-                <button type="submit" class="submit-btn">Add User</button>
+                <button type="submit" class="submit-btn">ユーザーを追加</button>
             </form>
         </div>
     </div>
