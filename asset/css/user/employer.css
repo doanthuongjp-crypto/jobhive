@@ -4,7 +4,6 @@
   color: white;
 }
 
-
 .custom-blue {
   background: linear-gradient(180deg, #002f86, #00349a, #0156f0);
 }
@@ -13,19 +12,18 @@
   background: #003699;
 }
 
-.logo-header{
+.logo-header {
   width: 10rem;
 }
 
-.navbar-brand img{
-  width:10rem;
+.navbar-brand img {
+  width: 10rem;
   height: auto;
 }
 
 .navbar .nav-link {
   color: white !important;
   font-weight: bold;
-
 }
 
 .nav-link:hover {
@@ -37,51 +35,51 @@
 }
 
 .hero-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 0 15px; /* Thêm padding để tránh sát mép trên mobile */
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 15px; /* モバイルでの端の余白を確保 */
 }
 
 #hero-carousel {
-    width: 100%;
-    max-width: 1200px; /* Chiều rộng tối đa cho màn hình lớn */
+  width: 100%;
+  max-width: 1200px; /* 大画面での最大幅 */
 }
 
 .hero-img {
-    width: 100%;
-    height: auto; /* Đảm bảo hình ảnh giữ tỷ lệ */
-    max-height: 600px; /* Chiều cao tối đa cho màn hình lớn */
-    object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
-      border: none;
-    border-radius: 12px;
+  width: 100%;
+  height: auto; /* アスペクト比を維持 */
+  max-height: 600px; /* 大画面での最大高さ */
+  object-fit: cover; /* 画像の歪みを防止 */
+  border: none;
+  border-radius: 12px;
 }
 
-/* Responsive cho các kích thước màn hình nhỏ hơn */
+/* レスポンシブ対応：タブレット・小型PCサイズ */
 @media (max-width: 768px) {
-    #hero-carousel {
-        max-width: 100%; /* Chiếm toàn bộ chiều rộng trên mobile */
-    }
+  #hero-carousel {
+    max-width: 100%; /* モバイルでは全幅表示 */
+  }
 
-    .hero-img {
-        max-height: 400px; /* Giảm chiều cao trên màn hình nhỏ */
-    }
+  .hero-img {
+    max-height: 400px; /* 小さな画面では高さを縮小 */
+  }
 }
 
+/* レスポンシブ対応：スマートフォンサイズ */
 @media (max-width: 576px) {
-    .hero-img {
-        max-height: 300px; /* Giảm thêm chiều cao cho màn hình rất nhỏ */
-    }
+  .hero-img {
+    max-height: 300px; /* 極小画面ではさらに高さを縮小 */
+  }
 
-    .carousel-control-prev,
-    .carousel-control-next {
-        width: 15%; /* Tăng diện tích nút điều khiển trên mobile */
-    }
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 15%; /* モバイルでの操作性を高めるためコントロールエリアを拡大 */
+  }
 }
 
-.bg-job-list{
+.bg-job-list {
   background-color: #e5eeff;
 }
 
@@ -90,13 +88,13 @@
   transform: scale(1.02);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-        
-.card-text{
-  margin: 0; 
+
+.card-text {
+  margin: 0;
 }
 
-/* List feedback */
-.feedback-card{
+/* フィードバックリスト */
+.feedback-card {
   width: 25rem;
   height: 13rem !important;
   background-color: #fff;
@@ -105,35 +103,38 @@
 }
 
 .feedback-indicators {
-  bottom: -3rem !important; /* Indicator cách dưới carousel */
+  bottom: -3rem !important; /* インジケーターをカルーセルの下に配置 */
 }
 
-
 .filled {
-  color: #ffc107; /* Gold color for filled stars */
+  color: #ffc107; /* アクティブな星の色（ゴールド） */
 }
 
 .feedback-container {
   min-height: 15rem;
 }
 
-/* Feedback */
+/* フィードバック投稿（評価） */
 .star-rating {
-  direction: rtl; /* Để hover từ phải sang trái */
+  direction: rtl; /* 右から左へホバーを適用するため */
   display: inline-flex;
 }
+
 .star-rating input {
   display: none;
 }
+
 .star-rating label {
   color: #ccc;
   cursor: pointer;
   font-size: 2rem;
   padding: 0 5px;
 }
+
 .star-rating input:checked ~ label {
   color: #f5c518;
 }
+
 .star-rating label:hover,
 .star-rating label:hover ~ label {
   color: #f5c518;
